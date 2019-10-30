@@ -16,15 +16,10 @@ var flashCardGame = {
         },
     },
     startGame: function(){
+        flashCardGame.startTimer();
         flashCardGame.chooseQuestion();
         flashCardGame.displayQuestion();
         $('.answerChoice').on('click', flashCardGame.checkAnswer);
-            // if($(this).html() === flashCardGame.randomFlashCard.answer){
-            //     console.log('true');
-            // }else{
-            //     console.log('false');
-            // }
-        // })
     },
     startTimer: function(){
         var secondsRemaining = 30;
@@ -60,7 +55,7 @@ var flashCardGame = {
     },
     checkAnswer: function(){
         if($(this).html() === flashCardGame.randomFlashCard.answer){
-            console.log('true');
+            clearInterval(flashCardGame.timer);
         }else{
             console.log('false');
         }
