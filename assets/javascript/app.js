@@ -18,13 +18,13 @@ var flashCardGame = {
     startGame: function(){
         flashCardGame.chooseQuestion();
         flashCardGame.displayQuestion();
-        $('.answerChoice').on('click', function(){
-            if($(this).html() === flashCardGame.randomFlashCard.answer){
-                console.log('true');
-            }else{
-                console.log('false');
-            }
-        })
+        $('.answerChoice').on('click', flashCardGame.checkAnswer);
+            // if($(this).html() === flashCardGame.randomFlashCard.answer){
+            //     console.log('true');
+            // }else{
+            //     console.log('false');
+            // }
+        // })
     },
     startTimer: function(){
         var secondsRemaining = 30;
@@ -57,6 +57,13 @@ var flashCardGame = {
         flashCardGame.answersArray.forEach(answer => {
             $('#answers').append("<pre value=true class=answerChoice>" + answer + "</pre>" ); 
         });
+    },
+    checkAnswer: function(){
+        if($(this).html() === flashCardGame.randomFlashCard.answer){
+            console.log('true');
+        }else{
+            console.log('false');
+        }
     }
 
     
