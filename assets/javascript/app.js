@@ -2,7 +2,7 @@ var flashCardGame = {
     chosenQuestion: '',
     answersArray: [],
     timer: false,
-    randomFlashCard: false,
+    chosenFlashCard: false,
     flashcards: {
         card1: {
             question: "Which code allows you to connect to an external javascript file?",
@@ -27,17 +27,19 @@ var flashCardGame = {
             $('#timeRemaining').text(secondsRemaining);
             if(secondsRemaining === 0){
                 clearInterval(flashCardGame.timer);
+                flashCardGame.showCorrectAnswer();
             }else{
                 secondsRemaining--;
             }
        }, 1000);
     },
     chooseQuestion: function(){
-        flashCardGame.randomFlashCard = flashCardGame.flashcards[Object.keys(flashCardGame.flashcards)[Math.floor(Math.random() * Object.keys(flashCardGame.flashcards).length)]];
-        flashCardGame.chosenQuestion = flashCardGame.randomFlashCard.question;
+        var randomFlashCard = Object.keys(flashCardGame.flashcards)[Math.floor(Math.random() * Object.keys(flashCardGame.flashcards).length)];
+        flashCardGame.chosenFlashCard = flashCardGame.flashcards[randomFlashCard];
+        flashCardGame.chosenQuestion = flashCardGame.chosenFlashCard.question;
         var tempAnswers = [];
-        tempAnswers.push(flashCardGame.randomFlashCard.answer);
-        flashCardGame.randomFlashCard.wrongAnswers.forEach(answer => {
+        tempAnswers.push(flashCardGame.chosenFlashCard.answer);
+        flashCardGame.chosenFlashCard.wrongAnswers.forEach(answer => {
             tempAnswers.push(answer);
         });
         for (let i = tempAnswers.length - 1; i > 0; i--) {
@@ -56,11 +58,21 @@ var flashCardGame = {
         });
     },
     checkAnswer: function(){
-        if($(this).text() === flashCardGame.randomFlashCard.answer){
+        if($(this).text() === flashCardGame.chosenFlashCard.answer){
             clearInterval(flashCardGame.timer);
         }else{
-            console.log('false');
+            clearInterval(flashCardGame.timer);
         }
+        flashCardGame.showCorrectAnswer();
+    },
+    showCorrectAnswer: function(){
+        $('.answer').each(function(index){
+            if($(this).text() === flashCardGame.chosenFlashCard.answer){
+                $(this).addClass("correctAnswer");
+            }else{
+                $(this).addClass("wrongAnswer");
+            }
+        });
     }
 
     
