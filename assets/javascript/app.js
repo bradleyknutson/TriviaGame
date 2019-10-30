@@ -6,8 +6,8 @@ var flashCardGame = {
     flashcards: {
         card1: {
             question: "Which code allows you to connect to an external javascript file?",
-            answer: "&lt;script src=\"otherFile.js\"&gt;&lt;/script&gt;",
-            wrongAnswers: ["&lt;script src=otherFile.js&gt;&lt;/script&gt;", "&lt;script&gt;\"otherFile.js\"&lt;/script&gt;", "&lt;script source=\"otherFile.js\"&gt;&lt;/script&gt;"]
+            answer: "<script src=\"otherFile.js\"></script>",
+            wrongAnswers: ["<script src=otherFile.js></script>", "<script>\"otherFile.js\"</script>", "<script source=\"otherFile.js\"></script>"]
         },
         card2: {
             question: "How would you use the Javascript Query Selector to find an element with an ID of 'newId'?",
@@ -19,7 +19,7 @@ var flashCardGame = {
         flashCardGame.startTimer();
         flashCardGame.chooseQuestion();
         flashCardGame.displayQuestion();
-        $('.answerChoice').on('click', flashCardGame.checkAnswer);
+        $('.answer').on('click', flashCardGame.checkAnswer);
     },
     startTimer: function(){
         var secondsRemaining = 30;
@@ -50,11 +50,13 @@ var flashCardGame = {
     displayQuestion: function(){
         $('#question').text(flashCardGame.chosenQuestion);
         flashCardGame.answersArray.forEach(answer => {
-            $('#answers').append("<pre value=true class=answerChoice>" + answer + "</pre>" ); 
+            $('.answer').each(function (indexInArray) { 
+                 $(this).text(flashCardGame.answersArray[indexInArray]);
+            }); 
         });
     },
     checkAnswer: function(){
-        if($(this).html() === flashCardGame.randomFlashCard.answer){
+        if($(this).text() === flashCardGame.randomFlashCard.answer){
             clearInterval(flashCardGame.timer);
         }else{
             console.log('false');
