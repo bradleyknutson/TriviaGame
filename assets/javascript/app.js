@@ -22,12 +22,14 @@ var flashCardGame = {
         $('.answer').on('click', flashCardGame.checkAnswer);
     },
     startTimer: function(){
+        clearInterval(flashCardGame.timer);
         var secondsRemaining = 30;
         flashCardGame.timer = setInterval(function(){
             $('#timeRemaining').text(secondsRemaining);
             if(secondsRemaining === 0){
                 clearInterval(flashCardGame.timer);
                 flashCardGame.showCorrectAnswer();
+                flashCardGame.newQuestion();
             }else{
                 secondsRemaining--;
             }
@@ -63,6 +65,7 @@ var flashCardGame = {
         }else{
             clearInterval(flashCardGame.timer);
         }
+        flashCardGame.newQuestion();
         flashCardGame.showCorrectAnswer();
     },
     showCorrectAnswer: function(){
@@ -73,9 +76,16 @@ var flashCardGame = {
                 $(this).addClass("wrongAnswer");
             }
         });
-    }
-
-    
+    },
+    newQuestion: function(){
+        setTimeout(function(){
+            $('.answer').each(function(index){
+                $(this).removeClass("correctAnswer");
+                $(this).removeClass('wrongAnswer');
+            });
+            flashCardGame.startGame();
+        }, 1000 * 10);
+    }   
 };
 
 //Set timer to 30 seconds and countdown once per second
@@ -87,3 +97,17 @@ var flashCardGame = {
 //After 10 seconds, automatically move on to next question.
 
 flashCardGame.startGame();
+
+$.ajax({
+    type: "GET",
+    url: "http://bknutson.com",
+    data: "data",
+    dataType: "dataType"})
+    .then(function(response, error){
+        if(error){
+            console.log(error)
+        }else{
+            console.log('No error');
+        }
+    });
+    

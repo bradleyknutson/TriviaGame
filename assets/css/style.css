@@ -1,7 +1,24 @@
+* {
+    box-sizing: border-box;
+}
+
 .correctAnswer {
-    border: 2px solid green;
+    /* border: 3px solid green; */
+    color: green!important;
 }
 
 .wrongAnswer {
-    border: 2px solid red;
+    /* border: 3px solid red; */
+    color: red!important;
+}
+
+.answer {
+    height: 200px;
+    background-color: black;
+    color: white;
+    font-size: 1em;
+}
+
+#answerSection {
+    margin-top: 50px;
 }
