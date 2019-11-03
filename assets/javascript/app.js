@@ -67,9 +67,13 @@ var flashCardGame = {
     },
     startTimer: function(){
         clearInterval(flashCardGame.timer);
+        $('#timeRemaining').css('color', 'lime');
         var secondsRemaining = 29;
         flashCardGame.timer = setInterval(function(){
             $('#timeRemaining').text(secondsRemaining);
+            if(secondsRemaining === 10){
+                $('#timeRemaining').css('color', 'red');
+            }
             if(secondsRemaining === 0){
                 flashCardGame.incorrectAnswers++;
                 $('#incorrect').text(flashCardGame.incorrectAnswers);
