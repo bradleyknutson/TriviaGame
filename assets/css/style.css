@@ -38,3 +38,7 @@ body {
     font-weight: bold;
     font-size: 2em;
 }
+
+#timeRemaining {
+    color: lime;
+}
