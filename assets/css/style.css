@@ -33,3 +33,8 @@ body {
 #answerSection {
     margin-top: 50px;
 }
+
+#question {
+    font-weight: bold;
+    font-size: 2em;
+}

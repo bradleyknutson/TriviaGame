@@ -5,6 +5,7 @@ var flashCardGame = {
     chosenFlashCard: false,
     correctAnswers: 0,
     incorrectAnswers: 0,
+    isAnswered: false,
     flashcards: {
         card1: {
             question: "Which code allows you to connect to an external javascript file?",
@@ -16,6 +17,47 @@ var flashCardGame = {
             answer: "document.querySelector(\"#newId\");",
             wrongAnswers: ["document.query(\"#newId\");", "document.querySelector(\".newId\");", "document.query(#newId);"]
         },
+        card3: {
+            question: "Which of the following is the proper HTML5 doctype?",
+            answer: "<!DOCTYPE html>",
+            wrongAnswers: ['<!doctype html>', "<doctype html>", "<DOCTYPE html>"]
+        },
+        card4: {
+            question: "What does SQL stand for?",
+            answer: "Structured Query Language",
+            wrongAnswers: ["Structured Question Language", "Standard Query Language", "Strong Question Language"]
+        },
+        card5: {
+            question: "Inside which HTML element do we put the JavaScript?",
+            answer: "<script>",
+            wrongAnswers: ["<javascript>", "<js>", "<scripting>"]
+        },
+        card6: {
+            question: "How do you alert the phrase \"Hello World?\"",
+            answer: "alert(\"Hello World\");",
+            wrongAnswers: ['msg("Hello World");', 'msgBox("Hello World");', 'alertBox("hello World");']
+        },
+        card7: {
+            question: "How do you create a function in JavaScript?",
+            answer: "function myFunction()",
+            wrongAnswers: ["function = myFunction()", "function:myFunction()", "function.newFunction = myFunction()"]
+        },
+        card8: {
+            question: "How do you call a function named 'startFunction'?",
+            answer: "startFunction()",
+            wrongAnswers: ['call function startFunction()', 'call startFunction()', 'startFunction']
+        },
+        card9: {
+            question: "Which of these is a valid IF statement?",
+            answer: "if(i === 5){ do some code}",
+            wrongAnswers: ['if i === 5 { do some code }', 'if i === 5 then( do some code )', 'if(i = 5){ do some code}']
+        },
+        card10: {
+            question: "Which of these is a valid FOR loop?",
+            answer: "for(let i = 0; i < arr.length; i++) { do some code }",
+            wrongAnswers: ["for(let i = 0; i++; i < arr.length) { do some code }", "for(let i = 0, i < arr.length, i++) { do some code }", "for(arr.each){ do some code }"]
+        }
+    
     },
     startGame: function(){
         flashCardGame.startTimer();
@@ -29,6 +71,9 @@ var flashCardGame = {
         flashCardGame.timer = setInterval(function(){
             $('#timeRemaining').text(secondsRemaining);
             if(secondsRemaining === 0){
+                flashCardGame.incorrectAnswers++;
+                $('#incorrect').text(flashCardGame.incorrectAnswers);
+                flashCardGame.isAnswered = true;
                 clearInterval(flashCardGame.timer);
                 flashCardGame.showCorrectAnswer();
                 flashCardGame.newQuestion();
@@ -62,17 +107,21 @@ var flashCardGame = {
         });
     },
     checkAnswer: function(){
-        if($(this).text() === flashCardGame.chosenFlashCard.answer){
-            clearInterval(flashCardGame.timer);
-            flashCardGame.correctAnswers++;
-            $('#correct').text(flashCardGame.correctAnswers);
-        }else{
-            clearInterval(flashCardGame.timer);
-            flashCardGame.incorrectAnswers++;
-            $('#incorrect').text(flashCardGame.incorrectAnswers);
+        if(!flashCardGame.isAnswered){
+            flashCardGame.isAnswered = true;
+            if($(this).text() === flashCardGame.chosenFlashCard.answer){
+                clearInterval(flashCardGame.timer);
+                flashCardGame.correctAnswers++;
+                $('#correct').text(flashCardGame.correctAnswers);
+            }else{
+                clearInterval(flashCardGame.timer);
+                flashCardGame.incorrectAnswers++;
+                $('#incorrect').text(flashCardGame.incorrectAnswers);
+            }
+            flashCardGame.newQuestion();
+            flashCardGame.showCorrectAnswer();        
         }
-        flashCardGame.newQuestion();
-        flashCardGame.showCorrectAnswer();
+
     },
     showCorrectAnswer: function(){
         $('.answer').each(function(index){
@@ -90,6 +139,7 @@ var flashCardGame = {
                 $(this).removeClass("correctAnswer");
                 $(this).removeClass('wrongAnswer');
             });
+            flashCardGame.isAnswered = false;
             flashCardGame.startGame();
         }, 1000 * 5);
     }   
@@ -109,4 +159,3 @@ $('#startButton').on('click', function(){
     $('#startButton').hide();
     $('.answer').on('click', flashCardGame.checkAnswer);
 })
-
