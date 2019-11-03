@@ -14,32 +14,45 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Totally Trivial Trivia!</h1>
+                <h1 class="text-center">Let's become a web developer!</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="text-center">Time Remaining: <span id="timeRemaining">30</span> Seconds</div>
+                <button class="text-center btn-danger" id="startButton">Start!</button>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div>Time Remaining: <span id="timeRemaining">30</span> Seconds</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div id="question"></div>
+                <div id="question" class="text-center"></div>
             </div>
         </div>
         <div id="answerSection">
             <div class="row">
                 <div class="col-lg-1"></div>
-                <pre class="col-lg-4 answer"></pre>
+                <div class="col-lg-4">
+                    <pre class="answer text-center"></pre>
+                </div>
                 <div class="col-lg-2"></div>
-                <pre class="col-lg-4 answer"></pre>
+                <div class="col-lg-4">
+                    <pre class="answer text-center"></pre>
+                </div>
                 <div class="col-lg-1"></div>
             </div>
             <div class="row">
                 <div class="col-lg-1"></div>
-                <pre class="col-lg-4 answer"></pre>
+                <div class="col-lg-4">
+                    <pre class="answer text-center"></pre>
+                    <div>Correct: <span id="correct">0</span></div>
+                </div>
                 <div class="col-lg-2"></div>
-                <pre class="col-lg-4 answer"></pre>
+                <div class="col-lg-4">
+                    <pre class="answer text-center"></pre>
+                    <div>
+                        Incorrect: <span id="incorrect">0</span>
+                    </div>
+                </div>
                 <div class="col-lg-1"></div>
             </div>
         </div>

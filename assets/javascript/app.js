@@ -3,6 +3,8 @@ var flashCardGame = {
     answersArray: [],
     timer: false,
     chosenFlashCard: false,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
     flashcards: {
         card1: {
             question: "Which code allows you to connect to an external javascript file?",
@@ -19,11 +21,11 @@ var flashCardGame = {
         flashCardGame.startTimer();
         flashCardGame.chooseQuestion();
         flashCardGame.displayQuestion();
-        $('.answer').on('click', flashCardGame.checkAnswer);
+        
     },
     startTimer: function(){
         clearInterval(flashCardGame.timer);
-        var secondsRemaining = 30;
+        var secondsRemaining = 29;
         flashCardGame.timer = setInterval(function(){
             $('#timeRemaining').text(secondsRemaining);
             if(secondsRemaining === 0){
@@ -62,8 +64,12 @@ var flashCardGame = {
     checkAnswer: function(){
         if($(this).text() === flashCardGame.chosenFlashCard.answer){
             clearInterval(flashCardGame.timer);
+            flashCardGame.correctAnswers++;
+            $('#correct').text(flashCardGame.correctAnswers);
         }else{
             clearInterval(flashCardGame.timer);
+            flashCardGame.incorrectAnswers++;
+            $('#incorrect').text(flashCardGame.incorrectAnswers);
         }
         flashCardGame.newQuestion();
         flashCardGame.showCorrectAnswer();
@@ -79,12 +85,13 @@ var flashCardGame = {
     },
     newQuestion: function(){
         setTimeout(function(){
+            $('#timeRemaining').text('30');
             $('.answer').each(function(index){
                 $(this).removeClass("correctAnswer");
                 $(this).removeClass('wrongAnswer');
             });
             flashCardGame.startGame();
-        }, 1000 * 10);
+        }, 1000 * 5);
     }   
 };
 
@@ -96,18 +103,10 @@ var flashCardGame = {
 //In incorrect, notify user and show correct answer
 //After 10 seconds, automatically move on to next question.
 
-flashCardGame.startGame();
 
-$.ajax({
-    type: "GET",
-    url: "http://bknutson.com",
-    data: "data",
-    dataType: "dataType"})
-    .then(function(response, error){
-        if(error){
-            console.log(error)
-        }else{
-            console.log('No error');
-        }
-    });
-    
+$('#startButton').on('click', function(){
+    flashCardGame.startGame();
+    $('#startButton').hide();
+    $('.answer').on('click', flashCardGame.checkAnswer);
+})
+
